@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        input { width: 80%; padding: 10px; margin-top: 20px; }
+        button { padding: 10px 20px; cursor: pointer; }
+        #chatbox { margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <h2>AI Chatbot</h2>
+    <div id="chatbox">
+        <input type="text" id="user_input" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <p id="bot_response"></p>
+
+    <script>
+        function sendMessage() {
+            let user_input = document.getElementById("user_input").value;
+            fetch("/chat", {
+                method: "POST",
+                body: new URLSearchParams({ "user_input": user_input }),
+                headers: { "Content-Type": "application/x-www-form-urlencoded" }
+            })
+            .then(response => response.text())
+            .then(data => document.getElementById("bot_response").innerText = data);
+        }
+    </script>
+
+</body>
+</html>
